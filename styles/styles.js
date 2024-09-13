@@ -1,0 +1,196 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  icon: {
+    fontFamily: 'FontAwesome',
+    fontSize: 30,
+  },
+  stickyBar: {
+    position: 'absolute',
+    bottom: 0,
+    height: 50,
+    width: '100%',
+    backgroundColor: '#0a0708',
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  dayContainer: {
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dayText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#b1b1b1',
+  },
+  selectedDayText: {
+    color: '#fff',
+  },
+  head: {
+    height: 40,
+    backgroundColor: '#6A6A6A',
+    fontWeight: 'bold',
+  },
+  text: {
+    margin: 6,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  headerText: {
+    margin: 6,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  tableContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#0a0708',
+    marginBottom: 5,
+  },
+  scrollViewContent: {
+    paddingBottom: 70,
+  },
+  checkboxContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    left: 35,
+  },
+  exerciseName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginVertical: 5,
+    color: '#0a0708',
+  },
+  exerciseContainer: {
+    marginBottom: 20,
+  },
+  exerciseHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  deleteButton: {
+    backgroundColor: '#ff4d4d',
+    padding: 5,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 5,
+
+    elevation: 10, // Adjust the shadow depth
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  editButton: {
+    backgroundColor: '#4CAF50',
+    padding: 5,
+    borderRadius: 5,
+    marginRight: 10,
+    alignItems: 'center',
+  },
+  editButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  motivation: {
+    backgroundColor: '#444444',
+    borderRadius: 6,
+    padding: 20,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  motivationText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  addExerciseButton: {
+    backgroundColor: '#444444',
+    borderRadius: 6,
+    padding: 10,
+    alignItems: 'center',
+  },
+  addExerciseButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  addButton: {
+    backgroundColor: '#444444',
+    padding: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'grey',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 20,
+    color: 'white',
+    textAlign: 'center',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButtonConfirm: {
+    backgroundColor: '#4CAF50',
+    padding: 10,
+    borderRadius: 5,
+    flex: 1,
+    marginRight: 5,
+    alignItems: 'center',
+  },
+  modalButtonCancel: {
+    backgroundColor: '#f44336',
+    padding: 10,
+    borderRadius: 5,
+    flex: 1,
+    marginLeft: 5,
+    alignItems: 'center',
+  },
+  modalButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  input: {
+    width: '100%',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    padding: 5,
+    marginBottom: 20,
+    paddingRight: 160,
+    paddingLeft: 10,
+  },
+});

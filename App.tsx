@@ -1,13 +1,10 @@
-/* eslint-disable quotes */
 /* eslint-disable react-hooks/exhaustive-deps */
-
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   useColorScheme,
   View,
@@ -17,13 +14,17 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Table, Row, Rows} from 'react-native-table-component';
-import {tableDataMap} from './tableData'; // Import tableDataMap from tableData.ts
+import {tableDataMap} from './tableData';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Modal from 'react-native-modal';
+import {styles} from './styles/styles';
+import {Svg, Path} from 'react-native-svg';
 
-type CheckboxesState = Record<string, boolean>; // Use string key for checkboxes
+// Type for storing tableRows data
+type CheckboxesState = Record<string, boolean>;
 
-const STORAGE_KEY = '@tableRowsData'; // Key for AsyncStorage for table rows
+// Key for storing tableRows data in AsyncStorage
+const STORAGE_KEY = '@tableRowsData';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -35,66 +36,78 @@ function App(): React.JSX.Element {
 
   // Define an array of motivational quotes
   const motivationalQuotes = [
-    // Fitness Motivation
-    "Push yourself, because no one else is going to do it for you.",
-    "Success is the sum of small efforts repeated day in and day out.",
+    'Push yourself, because no one else is going to do it for you.',
+    'Success is the sum of small efforts repeated day in and day out.',
     "Don't limit your challenges, challenge your limits.",
-    "The pain you feel today will be the strength you feel tomorrow.",
-    "Dream big, work hard, stay focused, and surround yourself with good people.",
-    "Strength does not come from physical capacity, it comes from an indomitable will.",
+    'The pain you feel today will be the strength you feel tomorrow.',
+    'Dream big, work hard, stay focused, and surround yourself with good people.',
+    'Strength does not come from physical capacity, it comes from an indomitable will.',
     "You're one workout away from a good mood.",
-    "Sweat is just fat crying.",
-    "It never gets easier, you just get stronger.",
-    "Your body can stand almost anything. It’s your mind you have to convince.",
-    "Make every workout count.",
-    "When you feel like quitting, think about why you started.",
-    "You don’t have to be extreme, just consistent.",
-    "No pain, no gain. Shut up and train.",
-    "Excuses don’t burn calories.",
-    "The only bad workout is the one that didn’t happen.",
-    "Train insane or remain the same.",
-    "If it doesn’t challenge you, it doesn’t change you.",
-    "Fitness is not about being better than someone else. It’s about being better than you used to be.",
-    "Your only limit is you.",
-    "Work hard in silence, let your success be the noise.",
-    "Sweat, smile, and repeat.",
-    "Fall in love with taking care of your body.",
-    "You didn’t come this far to only come this far.",
-    "When you feel like stopping, think about how far you’ve come.",
+    'Sweat is just fat crying.',
+    'It never gets easier, you just get stronger.',
+    'Your body can stand almost anything. It’s your mind you have to convince.',
+    'Make every workout count.',
+    'When you feel like quitting, think about why you started.',
+    'You don’t have to be extreme, just consistent.',
+    'No pain, no gain. Shut up and train.',
+    'Excuses don’t burn calories.',
+    'The only bad workout is the one that didn’t happen.',
+    'Train insane or remain the same.',
+    'If it doesn’t challenge you, it doesn’t change you.',
+    'Fitness is not about being better than someone else. It’s about being better than you used to be.',
+    'Your only limit is you.',
+    'Work hard in silence, let your success be the noise.',
+    'Sweat, smile, and repeat.',
+    'Fall in love with taking care of your body.',
+    'You didn’t come this far to only come this far.',
+    'When you feel like stopping, think about how far you’ve come.',
 
     // Mental and Philosophical Motivation
-    "He who conquers himself is the mightiest warrior. — Confucius",
-    "The mind is everything. What you think, you become. — Buddha",
-    "It is not the man who has too little, but the man who craves more, that is poor. — Seneca",
-    "Our life is what our thoughts make it. — Marcus Aurelius",
-    "Difficulties strengthen the mind, as labor does the body. — Seneca",
-    "You have power over your mind — not outside events. Realize this, and you will find strength. — Marcus Aurelius",
-    "First say to yourself what you would be; and then do what you have to do. — Epictetus",
-    "Do not go where the path may lead, go instead where there is no path and leave a trail. — Ralph Waldo Emerson",
-    "The only way to achieve the impossible is to believe it is possible. — Charles Kingsleigh",
-    "Strength does not come from winning. Your struggles develop your strengths. — Arnold Schwarzenegger",
-    "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment. — Buddha",
-    "It does not matter how slowly you go, as long as you do not stop. — Confucius",
-    "Waste no more time arguing what a good person should be. Be one. — Marcus Aurelius",
-    "What lies behind us and what lies before us are tiny matters compared to what lies within us. — Ralph Waldo Emerson",
-    "Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power. — Lao Tzu",
-    "Perseverance is not a long race; it is many short races one after the other. — Walter Elliot",
-    "The obstacle is the path. — Zen Proverb",
-    "Fall seven times, stand up eight. — Japanese Proverb",
-    "Act without expectation. — Lao Tzu",
-    "What you get by achieving your goals is not as important as what you become by achieving your goals. — Zig Ziglar",
-    "A gem cannot be polished without friction, nor a man perfected without trials. — Seneca",
-    "The unexamined life is not worth living. — Socrates",
-    "To improve is to change; to be perfect is to change often. — Winston Churchill",
-    "Man is not made for defeat. A man can be destroyed but not defeated. — Ernest Hemingway",
+    'He who conquers himself is the mightiest warrior. — Confucius',
+    'The mind is everything. What you think, you become. — Buddha',
+    'It is not the man who has too little, but the man who craves more, that is poor. — Seneca',
+    'Our life is what our thoughts make it. — Marcus Aurelius',
+    'Difficulties strengthen the mind, as labor does the body. — Seneca',
+    'You have power over your mind — not outside events. Realize this, and you will find strength. — Marcus Aurelius',
+    'First say to yourself what you would be; and then do what you have to do. — Epictetus',
+    'Do not go where the path may lead, go instead where there is no path and leave a trail. — Ralph Waldo Emerson',
+    'The only way to achieve the impossible is to believe it is possible. — Charles Kingsleigh',
+    'Strength does not come from winning. Your struggles develop your strengths. — Arnold Schwarzenegger',
+    'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment. — Buddha',
+    'It does not matter how slowly you go, as long as you do not stop. — Confucius',
+    'Waste no more time arguing what a good person should be. Be one. — Marcus Aurelius',
+    'What lies behind us and what lies before us are tiny matters compared to what lies within us. — Ralph Waldo Emerson',
+    'Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power. — Lao Tzu',
+    'Perseverance is not a long race; it is many short races one after the other. — Walter Elliot',
+    'The obstacle is the path. — Zen Proverb',
+    'Fall seven times, stand up eight. — Japanese Proverb',
+    'Act without expectation. — Lao Tzu',
+    'What you get by achieving your goals is not as important as what you become by achieving your goals. — Zig Ziglar',
+    'A gem cannot be polished without friction, nor a man perfected without trials. — Seneca',
+    'The unexamined life is not worth living. — Socrates',
+    'To improve is to change; to be perfect is to change often. — Winston Churchill',
+    'Man is not made for defeat. A man can be destroyed but not defeated. — Ernest Hemingway',
   ];
 
-  // Automatically change motivation quote every 10 seconds
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      changeMotivation();
-    }, 10000); // Change every 10 seconds
-    return () => clearInterval(interval);
+    const startInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      intervalRef.current = setInterval(() => {
+        changeMotivation();
+      }, 10000); // Change every 10 seconds
+    };
+
+    startInterval(); // Start the interval
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, []);
 
   // State to store the current motivational quote
@@ -102,10 +115,17 @@ function App(): React.JSX.Element {
     motivationalQuotes[0], // Start with the first quote
   );
 
-  // Function to randomly select a motivational quote
   const changeMotivation = () => {
     const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
     setMotivation(motivationalQuotes[randomIndex]);
+
+    // Restart the interval when changing the motivation
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      changeMotivation();
+    }, 10000); // Change every 10 seconds
   };
 
   const [checkboxes, setCheckboxes] = useState<CheckboxesState>({});
@@ -124,20 +144,53 @@ function App(): React.JSX.Element {
   const [exerciseToEdit, setExerciseToEdit] = useState<number | null>(null);
   const [newExerciseName, setNewExerciseName] = useState<string>('');
 
+  const [isWeightEditModalVisible, setIsWeightEditModalVisible] =
+    useState(false);
+  const [isSetsEditModalVisible, setIsSetsEditModalVisible] = useState(false);
+  const [currentEditRowIndex, setCurrentEditRowIndex] = useState<number | null>(
+    null,
+  );
+  const [currentEditExerciseIndex, setCurrentEditExerciseIndex] = useState<
+    number | null
+  >(null);
+  const [newWeight, setNewWeight] = useState<string>('');
+  const [newSets, setNewSets] = useState<string>('');
+  type Exercise = {
+    name: string;
+    weight: number;
+    reps: number;
+    completed: boolean;
+  };
+
   // Load tableRows data from AsyncStorage on component mount
   useEffect(() => {
     const loadData = async () => {
       try {
         const storedData = await AsyncStorage.getItem(STORAGE_KEY);
         if (storedData) {
-          console.log('Loaded tableRows from AsyncStorage', storedData); // Debug log
-          setTableRows(JSON.parse(storedData));
+          const parsedData = JSON.parse(storedData) as Record<
+            string,
+            Exercise[][]
+          >;
+          const correctedData = Object.fromEntries(
+            Object.entries(parsedData).map(([day, exercises]) => [
+              day,
+              exercises.map((exercise, index) =>
+                index === 0
+                  ? [
+                      ['Exercise', 'Weight', 'Reps', 'Completed'],
+                      ...exercise.slice(1),
+                    ]
+                  : exercise,
+              ),
+            ]),
+          );
+          setTableRows(correctedData);
         }
       } catch (e) {
         console.error('Failed to load data from AsyncStorage', e);
       }
     };
-
     loadData();
   }, []);
 
@@ -214,7 +267,7 @@ function App(): React.JSX.Element {
       // Add a new exercise with default data
       updatedRows[currentDay] = [
         ...(updatedRows[currentDay] || []),
-        [['Exercise', 'Weight', 'Reps', 'Completed']], // Default row with exercise name
+        [['Exercise name', 'Weight', 'Reps', 'Completed']], // Default row with exercise name
         // Placeholder for actual sets
       ];
 
@@ -284,6 +337,59 @@ function App(): React.JSX.Element {
     }
   };
 
+  const openEditWeightModal = (
+    exerciseIndex: number,
+    rowIndex: number,
+    weight: string | number,
+  ) => {
+    // Ensure weight is a string
+    const weightStr = typeof weight === 'string' ? weight : weight.toString();
+    setCurrentEditExerciseIndex(exerciseIndex);
+    setCurrentEditRowIndex(rowIndex);
+    setNewWeight(weightStr); // Pass the string version
+    setIsWeightEditModalVisible(true);
+  };
+
+  const openEditSetsModal = (
+    exerciseIndex: number,
+    rowIndex: number,
+    sets: string | number,
+  ) => {
+    // Ensure sets is a string
+    const setsStr = typeof sets === 'string' ? sets : sets.toString();
+    setCurrentEditExerciseIndex(exerciseIndex);
+    setCurrentEditRowIndex(rowIndex);
+    setNewSets(setsStr); // Pass the string version
+    setIsSetsEditModalVisible(true);
+  };
+
+  const saveWeight = (
+    exerciseIndex: number | null,
+    rowIndex: number | null,
+  ) => {
+    if (exerciseIndex !== null && rowIndex !== null) {
+      setTableRows(prevRows => {
+        const updatedRows = {...prevRows};
+        // Update the second column (index 1) where weight is stored
+        updatedRows[selectedDay][exerciseIndex][rowIndex + 1][1] = newWeight;
+        return updatedRows;
+      });
+    }
+    setIsWeightEditModalVisible(false);
+  };
+
+  const saveSets = (exerciseIndex: number | null, rowIndex: number | null) => {
+    if (exerciseIndex !== null && rowIndex !== null) {
+      setTableRows(prevRows => {
+        const updatedRows = {...prevRows};
+        // Update the third column (index 2) where reps are stored
+        updatedRows[selectedDay][exerciseIndex][rowIndex + 1][2] = newSets;
+        return updatedRows;
+      });
+    }
+    setIsSetsEditModalVisible(false);
+  };
+
   const tables = tableRows[selectedDay] || [];
 
   return (
@@ -301,10 +407,12 @@ function App(): React.JSX.Element {
             backgroundColor: backgroundStyle.backgroundColor,
             padding: 16,
           }}>
- <TouchableOpacity onPress={changeMotivation} style={styles.motivation}>
+          <TouchableOpacity
+            onPress={changeMotivation}
+            style={styles.motivation}>
             <Text style={styles.motivationText}>{motivation}</Text>
           </TouchableOpacity>
-          
+
           <View
             style={{
               alignItems: 'center',
@@ -315,7 +423,9 @@ function App(): React.JSX.Element {
             <Text style={{fontSize: 20, fontWeight: 'bold', color: '#444444'}}>
               {selectedDay}
             </Text>
-            <TouchableOpacity onPress={addExercise} style={styles.addExerciseButton}>
+            <TouchableOpacity
+              onPress={addExercise}
+              style={styles.addExerciseButton}>
               <Text style={styles.addExerciseButtonText}>+ Add exercise</Text>
             </TouchableOpacity>
           </View>
@@ -323,21 +433,26 @@ function App(): React.JSX.Element {
           {tables.map((table, exerciseIndex) => (
             <View key={exerciseIndex} style={styles.exerciseContainer}>
               <View style={styles.exerciseHeader}>
-                <Text style={styles.exerciseName}>
-                  {table[0][0] || `Exercise ${exerciseIndex + 1}`}
-                </Text>
+                <TouchableOpacity onPress={() => openEditModal(exerciseIndex)}>
+                  <Text style={styles.exerciseName}>
+                    {table[0][0] || `Exercise ${exerciseIndex + 1}`}
+                  </Text>
+                </TouchableOpacity>
                 <View style={{flexDirection: 'row'}}>
                   <TouchableOpacity
                     onPress={() => openEditModal(exerciseIndex)}
-                    style={styles.editButton}>
-                    <Text style={styles.editButtonText}>
+                    style={styles.editButton}
+                  >
+                    <Text>
                       Edit
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => confirmDeleteExercise(exerciseIndex)}
                     style={styles.deleteButton}>
-                    <Text style={styles.deleteButtonText}>Delete</Text>
+                    <Svg width={14} height={14} viewBox="0 0 448 512">
+                      <Path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                    </Svg>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -382,9 +497,41 @@ function App(): React.JSX.Element {
                             );
                           }
                           return (
-                            <Text style={styles.text} key={cellIndex}>
-                              {cell}
-                            </Text>
+                            <>
+                              {cellIndex === 0 && (
+                                <Text style={styles.text} key={cellIndex}>
+                                  {cell}
+                                </Text>
+                              )}
+                              {cellIndex === 1 && (
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    openEditWeightModal(
+                                      exerciseIndex,
+                                      rowIndex,
+                                      cell,
+                                    )
+                                  }>
+                                  <Text style={styles.text} key={cellIndex}>
+                                    {cell}
+                                  </Text>
+                                </TouchableOpacity>
+                              )}
+                              {cellIndex === 2 && (
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    openEditSetsModal(
+                                      exerciseIndex,
+                                      rowIndex,
+                                      cell,
+                                    )
+                                  }>
+                                  <Text style={styles.text} key={cellIndex}>
+                                    {cell}
+                                  </Text>
+                                </TouchableOpacity>
+                              )}
+                            </>
                           );
                         },
                       ),
@@ -471,196 +618,63 @@ function App(): React.JSX.Element {
           </View>
         </View>
       </Modal>
+
+      <Modal
+        isVisible={isWeightEditModalVisible}
+        onBackdropPress={() => setIsWeightEditModalVisible(false)}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <TextInput
+            style={styles.input}
+            value={newWeight}
+            onChangeText={setNewWeight}
+            placeholder="Enter new weight"
+          />
+          <View style={styles.modalButtons}>
+            <Pressable
+              onPress={() =>
+                saveWeight(currentEditExerciseIndex, currentEditRowIndex)
+              }
+              style={styles.modalButtonConfirm}>
+              <Text style={styles.modalButtonText}>Save</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => setIsWeightEditModalVisible(false)}
+              style={styles.modalButtonCancel}>
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        isVisible={isSetsEditModalVisible}
+        onBackdropPress={() => setIsSetsEditModalVisible(false)}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <TextInput
+            style={styles.input}
+            value={newSets}
+            onChangeText={setNewSets}
+            placeholder="Enter new sets"
+          />
+          <View style={styles.modalButtons}>
+            <Pressable
+              onPress={() =>
+                saveSets(currentEditExerciseIndex, currentEditRowIndex)
+              }
+              style={styles.modalButtonConfirm}>
+              <Text style={styles.modalButtonText}>Save</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => setIsSetsEditModalVisible(false)}
+              style={styles.modalButtonCancel}>
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  stickyBar: {
-    position: 'absolute',
-    bottom: 0,
-    height: 50,
-    width: '100%',
-    backgroundColor: '#0a0708',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  dayContainer: {
-    paddingHorizontal: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dayText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#b1b1b1',
-  },
-  selectedDayText: {
-    color: '#fff',
-  },
-  head: {
-    height: 40,
-    backgroundColor: '#6A6A6A',
-    fontWeight: 'bold',
-  },
-  text: {
-    margin: 6,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  headerText: {
-    margin: 6,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  tableContainer: {
-    borderRadius: 10,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#0a0708',
-    marginBottom: 5,
-  },
-  scrollViewContent: {
-    paddingBottom: 70,
-  },
-  checkboxContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    left: 35,
-  },
-  exerciseName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    color: '#0a0708',
-  },
-  exerciseContainer: {
-    marginBottom: 20,
-  },
-  exerciseHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  deleteButton: {
-    backgroundColor: '#ff4d4d',
-    padding: 5,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  deleteButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  editButton: {
-    backgroundColor: '#4CAF50',
-    padding: 5,
-    borderRadius: 5,
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  editButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  motivation: {
-    backgroundColor: '#444444',
-    borderRadius: 6,
-    padding: 20,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  motivationText: {
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  addExerciseButton: {
-    backgroundColor: '#444444',
-    borderRadius: 6,
-    padding: 10,
-    alignItems: 'center',
-  },
-  addExerciseButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  addButton: {
-    backgroundColor: '#444444',
-    padding: 10,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    alignItems: 'center',
-  },
-  addButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: 'grey',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  modalText: {
-    fontSize: 16,
-    marginBottom: 20,
-    color: 'white',
-    textAlign: 'center',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  modalButtonConfirm: {
-    backgroundColor: '#4CAF50',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 5,
-    alignItems: 'center',
-  },
-  modalButtonCancel: {
-    backgroundColor: '#f44336',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginLeft: 5,
-    alignItems: 'center',
-  },
-  modalButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  input: {
-    width: '100%',
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    padding: 5,
-    marginBottom: 20,
-    paddingRight: 160,
-    paddingLeft: 10,
-  },
-});
 
 export default App;
