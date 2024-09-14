@@ -1,4 +1,4 @@
-    /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, useRef} from 'react';
 import {
@@ -20,6 +20,7 @@ import Modal from 'react-native-modal';
 import {styles} from './styles/styles';
 import {Svg, Path} from 'react-native-svg';
 import { Shadow } from 'react-native-shadow-2';
+import motivationalQuotes from './src/data/motivationData';
 
 // Type for storing tableRows data
 type CheckboxesState = Record<string, boolean>;
@@ -34,50 +35,6 @@ function App(): React.JSX.Element {
     backgroundColor: '#b1b1b1',
     flex: 1,
   };
-
-  // Define an array of motivational quotes
-  const motivationalQuotes = [
-    'Push yourself, because no one else is going to do it for you.',
-    'Success is the sum of small efforts repeated day in and day out.',
-    "Don't limit your challenges, challenge your limits.",
-    'The pain you feel today will be the strength you feel tomorrow.',
-    'Strength does not come from physical capacity, it comes from an indomitable will.',
-    "You're one workout away from a good mood.",
-    'Sweat is just fat crying.',
-    'It never gets easier, you just get stronger.',
-    'Your body can stand almost anything. It’s your mind you have to convince.',
-    'Make every workout count.',
-    'When you feel like quitting, think about why you started.',
-    'You don’t have to be extreme, just consistent.',
-    'No pain, no gain. Shut up and train.',
-    'Excuses don’t burn calories.',
-    'The only bad workout is the one that didn’t happen.',
-    'Train insane or remain the same.',
-    'If it doesn’t challenge you, it doesn’t change you.',
-    'Your only limit is you.',
-    'Work hard in silence, let your success be the noise.',
-    'Sweat, smile, and repeat.',
-    'You didn’t come this far to only come this far.',
-    'When you feel like stopping, think about how far you’ve come.',
-    'The mind is everything. What you think, you become.',
-    'Difficulties strengthen the mind, as labor does the body.',
-    'You have power over your mind — not outside events. Realize this, and you will find strength.',
-    'Do not go where the path may lead, go instead where there is no path and leave a trail.',
-    'The only way to achieve the impossible is to believe it is possible.',
-    'Strength does not come from winning. Your struggles develop your strengths.',
-    'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.',
-    'It does not matter how slowly you go, as long as you do not stop.',
-    'Waste no more time arguing what a good person should be. Be one.',
-    'What lies behind us and what lies before us are tiny matters compared to what lies within us.',
-    'Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.',
-    'Perseverance is not a long race; it is many short races one after the other.',
-    'The obstacle is the path.',
-    'Fall seven times, stand up eight.',
-    'What you get by achieving your goals is not as important as what you become by achieving your goals.',
-    'A gem cannot be polished without friction, nor a man perfected without trials.',
-    'To improve is to change; to be perfect is to change often.',
-    'Man is not made for defeat. A man can be destroyed but not defeated.',
-  ];
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
