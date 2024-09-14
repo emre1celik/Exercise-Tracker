@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+    /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, useRef} from 'react';
 import {
@@ -14,11 +14,12 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Table, Row, Rows} from 'react-native-table-component';
-import {tableDataMap} from './tableData';
+import {tableDataMap} from './src/data/tableData';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Modal from 'react-native-modal';
 import {styles} from './styles/styles';
 import {Svg, Path} from 'react-native-svg';
+import { Shadow } from 'react-native-shadow-2';
 
 // Type for storing tableRows data
 type CheckboxesState = Record<string, boolean>;
@@ -40,7 +41,6 @@ function App(): React.JSX.Element {
     'Success is the sum of small efforts repeated day in and day out.',
     "Don't limit your challenges, challenge your limits.",
     'The pain you feel today will be the strength you feel tomorrow.',
-    'Dream big, work hard, stay focused, and surround yourself with good people.',
     'Strength does not come from physical capacity, it comes from an indomitable will.',
     "You're one workout away from a good mood.",
     'Sweat is just fat crying.',
@@ -54,39 +54,29 @@ function App(): React.JSX.Element {
     'The only bad workout is the one that didn’t happen.',
     'Train insane or remain the same.',
     'If it doesn’t challenge you, it doesn’t change you.',
-    'Fitness is not about being better than someone else. It’s about being better than you used to be.',
     'Your only limit is you.',
     'Work hard in silence, let your success be the noise.',
     'Sweat, smile, and repeat.',
-    'Fall in love with taking care of your body.',
     'You didn’t come this far to only come this far.',
     'When you feel like stopping, think about how far you’ve come.',
-
-    // Mental and Philosophical Motivation
-    'He who conquers himself is the mightiest warrior. — Confucius',
-    'The mind is everything. What you think, you become. — Buddha',
-    'It is not the man who has too little, but the man who craves more, that is poor. — Seneca',
-    'Our life is what our thoughts make it. — Marcus Aurelius',
-    'Difficulties strengthen the mind, as labor does the body. — Seneca',
-    'You have power over your mind — not outside events. Realize this, and you will find strength. — Marcus Aurelius',
-    'First say to yourself what you would be; and then do what you have to do. — Epictetus',
-    'Do not go where the path may lead, go instead where there is no path and leave a trail. — Ralph Waldo Emerson',
-    'The only way to achieve the impossible is to believe it is possible. — Charles Kingsleigh',
-    'Strength does not come from winning. Your struggles develop your strengths. — Arnold Schwarzenegger',
-    'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment. — Buddha',
-    'It does not matter how slowly you go, as long as you do not stop. — Confucius',
-    'Waste no more time arguing what a good person should be. Be one. — Marcus Aurelius',
-    'What lies behind us and what lies before us are tiny matters compared to what lies within us. — Ralph Waldo Emerson',
-    'Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power. — Lao Tzu',
-    'Perseverance is not a long race; it is many short races one after the other. — Walter Elliot',
-    'The obstacle is the path. — Zen Proverb',
-    'Fall seven times, stand up eight. — Japanese Proverb',
-    'Act without expectation. — Lao Tzu',
-    'What you get by achieving your goals is not as important as what you become by achieving your goals. — Zig Ziglar',
-    'A gem cannot be polished without friction, nor a man perfected without trials. — Seneca',
-    'The unexamined life is not worth living. — Socrates',
-    'To improve is to change; to be perfect is to change often. — Winston Churchill',
-    'Man is not made for defeat. A man can be destroyed but not defeated. — Ernest Hemingway',
+    'The mind is everything. What you think, you become.',
+    'Difficulties strengthen the mind, as labor does the body.',
+    'You have power over your mind — not outside events. Realize this, and you will find strength.',
+    'Do not go where the path may lead, go instead where there is no path and leave a trail.',
+    'The only way to achieve the impossible is to believe it is possible.',
+    'Strength does not come from winning. Your struggles develop your strengths.',
+    'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.',
+    'It does not matter how slowly you go, as long as you do not stop.',
+    'Waste no more time arguing what a good person should be. Be one.',
+    'What lies behind us and what lies before us are tiny matters compared to what lies within us.',
+    'Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.',
+    'Perseverance is not a long race; it is many short races one after the other.',
+    'The obstacle is the path.',
+    'Fall seven times, stand up eight.',
+    'What you get by achieving your goals is not as important as what you become by achieving your goals.',
+    'A gem cannot be polished without friction, nor a man perfected without trials.',
+    'To improve is to change; to be perfect is to change often.',
+    'Man is not made for defeat. A man can be destroyed but not defeated.',
   ];
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -129,7 +119,7 @@ function App(): React.JSX.Element {
   };
 
   const [checkboxes, setCheckboxes] = useState<CheckboxesState>({});
-  const [selectedDay, setSelectedDay] = useState<string>('Maandag (Push)');
+  const [selectedDay, setSelectedDay] = useState<string>('Monday (Push)');
   const [tableRows, setTableRows] = useState<Record<string, any[][]>>(
     Object.fromEntries(
       Object.keys(tableDataMap).map(key => [
@@ -175,14 +165,11 @@ function App(): React.JSX.Element {
           const correctedData = Object.fromEntries(
             Object.entries(parsedData).map(([day, exercises]) => [
               day,
-              exercises.map((exercise, index) =>
-                index === 0
-                  ? [
-                      ['Exercise', 'Weight', 'Reps', 'Completed'],
-                      ...exercise.slice(1),
-                    ]
-                  : exercise,
-              ),
+                exercises.map((exercise, index) =>
+                  index === 0 || exercise[0][0] === 'Set #'
+                    ? [['Exercise Name', 'Weight', 'Reps', 'Completed'], ...exercise.slice(1)] // Ensure the correct header is always present
+                    : exercise,
+                ),
             ]),
           );
           setTableRows(correctedData);
@@ -229,13 +216,13 @@ function App(): React.JSX.Element {
   };
 
   const daysOfWeek = [
-    'Maandag (Push)',
-    'Dinsdag (Pull)',
-    'Woensdag (Legs)',
-    'Donderdag (Rest)',
-    'Vrijdag (Push)',
-    'Zaterdag (Pull)',
-    'Zondag (Legs)',
+    'Monday (Push)',
+    'Tuesday (Pull)',
+    'Wednesday (Legs)',
+    'Thursday (Rest)',
+    'Friday (Push)',
+    'Saturday (Pull)',
+    'Sunday (Legs)',
   ];
 
   const addRow = (exerciseIndex: number) => {
@@ -396,8 +383,26 @@ function App(): React.JSX.Element {
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+        backgroundColor={"#1f232c"}
       />
+       <View style={styles.topStickyBar}>
+        <View style={styles.leftIcons}>
+             <Svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 640 512">
+               <Path fill="white" d="M224 0a128 128 0 1 1 0 256A128 128 0 1 1 224 0zM178.3 304l91.4 0c11.8 0 23.4 1.2 34.5 3.3c-2.1 18.5 7.4 35.6 21.8 44.8c-16.6 10.6-26.7 31.6-20 53.3c4 12.9 9.4 25.5 16.4 37.6s15.2 23.1 24.4 33c15.7 16.9 39.6 18.4 57.2 8.7l0 .9c0 9.2 2.7 18.5 7.9 26.3L29.7 512C13.3 512 0 498.7 0 482.3C0 383.8 79.8 304 178.3 304zM436 218.2c0-7 4.5-13.3 11.3-14.8c10.5-2.4 21.5-3.7 32.7-3.7s22.2 1.3 32.7 3.7c6.8 1.5 11.3 7.8 11.3 14.8l0 30.6c7.9 3.4 15.4 7.7 22.3 12.8l24.9-14.3c6.1-3.5 13.7-2.7 18.5 2.4c7.6 8.1 14.3 17.2 20.1 27.2s10.3 20.4 13.5 31c2.1 6.7-1.1 13.7-7.2 17.2l-25 14.4c.4 4 .7 8.1 .7 12.3s-.2 8.2-.7 12.3l25 14.4c6.1 3.5 9.2 10.5 7.2 17.2c-3.3 10.6-7.8 21-13.5 31s-12.5 19.1-20.1 27.2c-4.8 5.1-12.5 5.9-18.5 2.4l-24.9-14.3c-6.9 5.1-14.3 9.4-22.3 12.8l0 30.6c0 7-4.5 13.3-11.3 14.8c-10.5 2.4-21.5 3.7-32.7 3.7s-22.2-1.3-32.7-3.7c-6.8-1.5-11.3-7.8-11.3-14.8l0-30.5c-8-3.4-15.6-7.7-22.5-12.9l-24.7 14.3c-6.1 3.5-13.7 2.7-18.5-2.4c-7.6-8.1-14.3-17.2-20.1-27.2s-10.3-20.4-13.5-31c-2.1-6.7 1.1-13.7 7.2-17.2l24.8-14.3c-.4-4.1-.7-8.2-.7-12.4s.2-8.3 .7-12.4L343.8 325c-6.1-3.5-9.2-10.5-7.2-17.2c3.3-10.6 7.7-21 13.5-31s12.5-19.1 20.1-27.2c4.8-5.1 12.4-5.9 18.5-2.4l24.8 14.3c6.9-5.1 14.5-9.4 22.5-12.9l0-30.5zm92.1 133.5a48.1 48.1 0 1 0 -96.1 0 48.1 48.1 0 1 0 96.1 0z"/>
+             </Svg>
+         </View>
+         <View style={styles.rightIcons}>
+           <Svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 512 512">
+             <Path fill="white" d="M32 32c17.7 0 32 14.3 32 32l0 336c0 8.8 7.2 16 16 16l400 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L80 480c-44.2 0-80-35.8-80-80L0 64C0 46.3 14.3 32 32 32zM160 224c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32zm128-64l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-160c0-17.7 14.3-32 32-32s32 14.3 32 32zm64 32c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-96c0-17.7 14.3-32 32-32zM480 96l0 224c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-224c0-17.7 14.3-32 32-32s32 14.3 32 32z"/>
+           </Svg>
+             <Svg viewBox="0 0 512 512"  width={19} height={19} >
+               <Path fill="white" d="M4.1 38.2C1.4 34.2 0 29.4 0 24.6C0 11 11 0 24.6 0L133.9 0c11.2 0 21.7 5.9 27.4 15.5l68.5 114.1c-48.2 6.1-91.3 28.6-123.4 61.9L4.1 38.2zm503.7 0L405.6 191.5c-32.1-33.3-75.2-55.8-123.4-61.9L350.7 15.5C356.5 5.9 366.9 0 378.1 0L487.4 0C501 0 512 11 512 24.6c0 4.8-1.4 9.6-4.1 13.6zM80 336a176 176 0 1 1 352 0A176 176 0 1 1 80 336zm184.4-94.9c-3.4-7-13.3-7-16.8 0l-22.4 45.4c-1.4 2.8-4 4.7-7 5.1L168 298.9c-7.7 1.1-10.7 10.5-5.2 16l36.3 35.4c2.2 2.2 3.2 5.2 2.7 8.3l-8.6 49.9c-1.3 7.6 6.7 13.5 13.6 9.9l44.8-23.6c2.7-1.4 6-1.4 8.7 0l44.8 23.6c6.9 3.6 14.9-2.2 13.6-9.9l-8.6-49.9c-.5-3 .5-6.1 2.7-8.3l36.3-35.4c5.6-5.4 2.5-14.8-5.2-16l-50.1-7.3c-3-.4-5.7-2.4-7-5.1l-22.4-45.4z" />
+             </Svg>
+             <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={20} height={20}>
+               <Path fill="white" d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
+             </Svg>
+         </View>
+       </View>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}
@@ -420,14 +425,16 @@ function App(): React.JSX.Element {
               flexDirection: 'row', // Arrange items horizontally
               marginBottom: 10,
             }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#444444'}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#1f232c'}}>
               {selectedDay}
             </Text>
+         <Shadow distance={3} startColor={'#00000033'}>
             <TouchableOpacity
               onPress={addExercise}
               style={styles.addExerciseButton}>
               <Text style={styles.addExerciseButtonText}>+ Add exercise</Text>
             </TouchableOpacity>
+            </Shadow>
           </View>
 
           {tables.map((table, exerciseIndex) => (
@@ -443,15 +450,15 @@ function App(): React.JSX.Element {
                     onPress={() => openEditModal(exerciseIndex)}
                     style={styles.editButton}
                   >
-                    <Text>
-                      Edit
-                    </Text>
+                    <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={14} height={14}>
+                        <Path fill="white" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
+                      </Svg>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => confirmDeleteExercise(exerciseIndex)}
                     style={styles.deleteButton}>
                     <Svg width={14} height={14} viewBox="0 0 448 512">
-                      <Path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                      <Path fill="white" d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
                     </Svg>
                   </TouchableOpacity>
                 </View>
@@ -485,7 +492,7 @@ function App(): React.JSX.Element {
                                   onPress={() =>
                                     toggleCheckbox(exerciseIndex, rowIndex)
                                   }
-                                  fillColor="black"
+                                  fillColor="#1f232c"
                                   unFillColor="white"
                                   size={20}
                                   iconStyle={{
@@ -543,7 +550,7 @@ function App(): React.JSX.Element {
                 <TouchableOpacity
                   onPress={() => addRow(exerciseIndex)}
                   style={styles.addButton}>
-                  <Text style={styles.addButtonText}>+ Add Set</Text>
+                  <Text style={styles.addButtonText}>+ Add set</Text>
                 </TouchableOpacity>
               </View>
             </View>

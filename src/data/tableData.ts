@@ -4,84 +4,84 @@ export type TableDataMap = Record<
 >;
 
 export const tableDataMap: TableDataMap = {
-  'Maandag (Push)': [
+  'Monday (Push)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed
       ],
     },
   ],
-  'Dinsdag (Pull)': [
+  'Tuesday (Pull)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed
       ],
     },
   ],
-  'Woensdag (Legs)': [
+  'Wednesday (Legs)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed
       ],
     },
   ],
-  'Donderdag (Rest)': [
+  'Thursday (Rest)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed
       ],
     },
   ],
-  'Vrijdag (Push)': [
+  'Friday (Push)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed
       ],
     },
   ],
-  'Zaterdag (Pull)': [
+  'Saturday (Pull)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed
       ],
     },
   ],
-  'Zondag (Legs)': [
+  'Sunday (Legs)': [
     {
       exerciseName: 'Exercise 1',
       data: [
         // Headers row
-        ['Set #', 'Weight', 'Reps', 'Completed'],
+        ['Exercise name', 'Weight', 'Reps', 'Completed'],
         // Data rows
         ['Set 1', '10 KG total', '10 reps', false],
         // Add more rows as needed

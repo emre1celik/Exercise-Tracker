@@ -16,6 +16,7 @@
     "react-native": "^0.75.2",
     "react-native-bouncy-checkbox": "^4.1.2",
     "react-native-modal": "^13.0.1",
+    "react-native-shadow-2": "^7.1.0",
     "react-native-svg": "^15.6.0",
     "react-native-svg-transformer": "^1.5.0",
     "react-native-table-component": "^1.2.2",
