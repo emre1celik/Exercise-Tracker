@@ -178,14 +178,15 @@ export const styles = StyleSheet.create({
     paddingRight: 5,
   },
   modal: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  flex: 1, // Ensure it takes up the full screen
+  justifyContent: 'center', // Center the modal vertically
+  alignItems: 'center',     // Center the modal horizontally
   },
   modalContent: {
     backgroundColor: '#F5F5F5', // Light gray for modal
     padding: 20,
     borderRadius: 10,
-    width: '100%',
+    width: '70%',
     alignItems: 'center',
   },
   modalText: {
@@ -199,12 +200,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
   },
-  modalInput: {
-    flexDirection: 'row',
-    gap: 15,
-    justifyContent: 'space-between',
-    marginBottom: 25,
-  },
+    modalInput: {
+      flexDirection: 'row',        // Arrange children in a row
+      justifyContent: 'space-between', // Space out the elements
+      alignItems: 'center',        // Center the elements vertically
+      marginBottom: 15,            // Add some spacing between rows
+      width: '100%',               // Ensure it takes up the full modal width
+    },
   modalButtonConfirm: {
     backgroundColor: '#54627b', // Dark green for confirm button
     padding: 10,
@@ -247,15 +249,17 @@ export const styles = StyleSheet.create({
   settingsInput: {
     borderColor: '#BDBDBD', // Lighter border for input
     borderWidth: 1,
-    width: 200,
+    width: 50,
     borderRadius: 5,
     backgroundColor: 'white',
     color: 'black',
     padding: 2,
+  flex: 1,                     // Allow the input to fill the remaining space
     paddingLeft: 10,
   },
   modalInputText: {
     marginTop: 5,
     marginBottom: 5,
+    flex: 1,                     // Make the text take up available space
   },
 });
