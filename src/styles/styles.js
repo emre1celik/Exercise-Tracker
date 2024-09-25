@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
   rightIcons: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 15,
     marginRight: 18,
   },
   leftIcons: {
@@ -199,6 +199,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
   },
+  modalInput: {
+    flexDirection: 'row',
+    gap: 15,
+    justifyContent: 'space-between',
+    marginBottom: 25,
+  },
   modalButtonConfirm: {
     backgroundColor: '#54627b', // Dark green for confirm button
     padding: 10,
@@ -208,6 +214,14 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalButtonCancel: {
+    backgroundColor: '#E57373', // Soft red for cancel button
+    padding: 10,
+    borderRadius: 5,
+    flex: 1,
+    marginLeft: 5,
+    alignItems: 'center',
+  },
+  modalSettingsButtonCancel: {
     backgroundColor: '#E57373', // Soft red for cancel button
     padding: 10,
     borderRadius: 5,
@@ -229,5 +243,19 @@ export const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 20,
     paddingLeft: 10,
+  },
+  settingsInput: {
+    borderColor: '#BDBDBD', // Lighter border for input
+    borderWidth: 1,
+    width: 200,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    color: 'black',
+    padding: 2,
+    paddingLeft: 10,
+  },
+  modalInputText: {
+    marginTop: 5,
+    marginBottom: 5,
   },
 });
