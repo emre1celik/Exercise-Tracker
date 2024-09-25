@@ -633,36 +633,34 @@ const toggleMotivation = () => setIsMotivationEnabled(previousState => !previous
           </View>
         </View>
       </Modal>
-
-      <Modal
-        isVisible={isWeightEditModalVisible}
-        onBackdropPress={() => setIsWeightEditModalVisible(false)}
-        style={styles.modal}>
-          <View style={styles.modal}>
-        <View style={styles.modalContent}>
-          <TextInput
+<Modal
+    isVisible={isWeightEditModalVisible}
+    onBackdropPress={() => setIsWeightEditModalVisible(false)}
+    style={styles.modal}>
+    <View style={styles.modalContent}>
+        <TextInput
             style={styles.input}
             value={newWeight}
             onChangeText={setNewWeight}
             placeholder="Enter new weight"
-          />
-          <View style={styles.modalButtons}>
+        />
+        <View style={styles.modalButtons}>
             <Pressable
-              onPress={() =>
-                saveWeight(currentEditExerciseIndex, currentEditRowIndex)
-              }
-              style={styles.modalButtonConfirm}>
-              <Text style={styles.modalButtonText}>Save</Text>
+                onPress={() =>
+                    saveWeight(currentEditExerciseIndex, currentEditRowIndex)
+                }
+                style={styles.modalButtonConfirm}>
+                <Text style={styles.modalButtonText}>Save</Text>
             </Pressable>
             <Pressable
-              onPress={() => setIsWeightEditModalVisible(false)}
-              style={styles.modalButtonCancel}>
-              <Text style={styles.modalButtonText}>Cancel</Text>
+                onPress={() => setIsWeightEditModalVisible(false)}
+                style={styles.modalButtonCancel}>
+                <Text style={styles.modalButtonText}>Cancel</Text>
             </Pressable>
-          </View>
         </View>
-        </View>
-      </Modal>
+    </View>
+</Modal>
+
       <Modal
         isVisible={isSetsEditModalVisible}
         onBackdropPress={() => setIsSetsEditModalVisible(false)}

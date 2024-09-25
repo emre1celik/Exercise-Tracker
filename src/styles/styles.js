@@ -186,7 +186,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5', // Light gray for modal
     padding: 20,
     borderRadius: 10,
-    width: '70%',
+    width: '80%',
     alignItems: 'center',
   },
   modalText: {
@@ -249,12 +249,11 @@ export const styles = StyleSheet.create({
   settingsInput: {
     borderColor: '#BDBDBD', // Lighter border for input
     borderWidth: 1,
-    width: 50,
     borderRadius: 5,
     backgroundColor: 'white',
     color: 'black',
     padding: 2,
-  flex: 1,                     // Allow the input to fill the remaining space
+    flex: 1,                     // Allow the input to fill the remaining space
     paddingLeft: 10,
   },
   modalInputText: {
