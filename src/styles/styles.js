@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   icon: {
@@ -178,9 +178,9 @@ export const styles = StyleSheet.create({
     paddingRight: 5,
   },
   modal: {
-  flex: 1, // Ensure it takes up the full screen
-  justifyContent: 'center', // Center the modal vertically
-  alignItems: 'center',     // Center the modal horizontally
+    flex: 1, // Ensure it takes up the full screen
+    justifyContent: 'center', // Center the modal vertically
+    alignItems: 'center', // Center the modal horizontally
   },
   modalContent: {
     backgroundColor: '#F5F5F5', // Light gray for modal
@@ -200,13 +200,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
   },
-    modalInput: {
-      flexDirection: 'row',        // Arrange children in a row
-      justifyContent: 'space-between', // Space out the elements
-      alignItems: 'center',        // Center the elements vertically
-      marginBottom: 15,            // Add some spacing between rows
-      width: '100%',               // Ensure it takes up the full modal width
-    },
+  modalInput: {
+    flexDirection: 'row', // Arrange children in a row
+    justifyContent: 'space-between', // Space out the elements
+    alignItems: 'center', // Center the elements vertically
+    marginBottom: 15, // Add some spacing between rows
+    width: '100%', // Ensure it takes up the full modal width
+  },
   modalButtonConfirm: {
     backgroundColor: '#54627b', // Dark green for confirm button
     padding: 10,
@@ -253,12 +253,13 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     color: 'black',
     padding: 2,
-    flex: 1,                     // Allow the input to fill the remaining space
+    flex: 1, // Allow the input to fill the remaining space
     paddingLeft: 10,
   },
   modalInputText: {
     marginTop: 5,
     marginBottom: 5,
-    flex: 1,                     // Make the text take up available space
+    flex: 1, // Make the text take up available space
+    color: 'grey',
   },
 });
