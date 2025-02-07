@@ -1,10 +1,10 @@
 const motivationalQuotes = [
                  'Push yourself, because no one else is going to do it for you.',
                  'Success is the sum of small efforts repeated day in and day out.',
-                 "Don't limit your challenges, challenge your limits.",
+                 'Don’t limit your challenges, challenge your limits.',
                  'The pain you feel today will be the strength you feel tomorrow.',
                  'Strength does not come from physical capacity, it comes from an indomitable will.',
-                 "You're one workout away from a good mood.",
+                 'You’re one workout away from a good mood.',
                  'Sweat is just fat crying.',
                  'It never gets easier, you just get stronger.',
                  'Your body can stand almost anything. It’s your mind you have to convince.',
